@@ -1,10 +1,11 @@
 {
     "manifest_version": 2,
-    "name": "Sparebeat Rate System Extension",
-    "version": "1.0.0",
-    "description": "Sparebeatのレートシステムっぽいやつ。曲のリスト上部にレート表示を追加しますわよ！",
+    "name": "Sparebeat Rate System (Chrome拡張版)",
+    "version": "1.0.1",
+    "description": "Sparebeatのレートシステムっぽいやつ。",
     "content_scripts": [{
         "matches": ["https://sparebeat.com/"],
+        "css": ["style.css"],
         "js": ["build/bundle.js"]
     }]
 }

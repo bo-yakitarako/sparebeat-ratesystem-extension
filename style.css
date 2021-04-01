@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+  margin-right: 0.8rem;
+}
+
+.header-title {
+  flex-grow: 1;
+}

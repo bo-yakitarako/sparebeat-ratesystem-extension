@@ -1,16 +1,11 @@
-import { calcPlayerRate } from './utility';
+import React from 'react';
+import { render } from 'react-dom';
+import { App } from './components/App';
 
 const classDom = document.getElementsByClassName('music-list-header-title');
 const header =
   classDom.length > 0 ? (classDom[0] as HTMLDivElement) : undefined;
 
 if (typeof header !== 'undefined') {
-  const rate = calcPlayerRate();
-  const component = `
-    <div class="wrapper">
-      <div class="header-title">Music List</div>
-      <div>Rate: ${rate.toFixed(1)}</div>
-    </div>
-  `;
-  header.innerHTML = component;
+  render(<App />, header);
 }

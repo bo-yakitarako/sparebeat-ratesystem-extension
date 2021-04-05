@@ -5,7 +5,6 @@
     "description": "Sparebeatのレートシステムっぽいやつ。",
     "content_scripts": [{
         "matches": ["https://sparebeat.com/"],
-        "css": ["style.css"],
         "js": ["build/bundle.js"]
     }]
 }

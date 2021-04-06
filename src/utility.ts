@@ -49,21 +49,23 @@ const calcRate = (score: number) => {
 const distributeMusic = (levels: Levels, records: RecordList, key: string) => {
   const record = records[key];
   const levelDict = levels[key];
-  return (['easy', 'normal', 'hard'] as Difficulty[]).reduce(
-    (pre, difficulty) => {
-      if (typeof record[difficulty] === 'undefined') {
-        return [...pre];
-      }
+  return (Object.keys(record) as Difficulty[]).reduce((pre, difficulty) => {
+    try {
       const score = record[difficulty]?.score as number;
       const rate = calcRate(score) + levelDict[difficulty];
       return [...pre, rate];
-    },
-    [] as number[],
-  );
+    } catch {
+      return [...pre];
+    }
+  }, [] as number[]);
 };
 
 const distributeRecords = () => {
-  const records = JSON.parse(localStorage.records) as RecordList;
+  const storage = localStorage.getItem('records');
+  if (storage === null) {
+    return undefined;
+  }
+  const records = JSON.parse(storage) as RecordList;
   const levels = parseLevels();
   return Object.keys(records).reduce(
     (pre, key) => [...pre, ...distributeMusic(levels, records, key)],
@@ -74,7 +76,11 @@ const distributeRecords = () => {
 const COUNT = 20;
 
 const calcPlayerRate = () => {
-  const rates = distributeRecords().sort((a, b) => b - a);
+  const ratesRow = distributeRecords();
+  if (typeof ratesRow === 'undefined') {
+    return 0;
+  }
+  const rates = ratesRow.sort((a, b) => b - a);
   const sum = rates.slice(0, COUNT).reduce((pre, cur) => pre + cur, 0);
   return sum / COUNT;
 };
